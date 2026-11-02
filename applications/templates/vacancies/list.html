@@ -1,0 +1,82 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Vacancies</h2>
+
+        <a href="{% url 'vacancy_add' %}" class="btn btn-primary">
+            Add Vacancy
+        </a>
+    </div>
+
+    {% if vacancies %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Title</th>
+                        <th>Employer</th>
+                        <th>Closing Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for vacancy in vacancies %}
+                    <tr>
+                        <td>{{ vacancy.title }}</td>
+
+                        <td>{{ vacancy.employer.name }}</td>
+
+                        <td>
+                            {% if vacancy.closing_date %}
+                                {{ vacancy.closing_date|date:"d M Y" }}
+                            {% else %}
+                                Not specified
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if vacancy.status == "Open" %}
+                                <span class="badge bg-success">
+                                    {{ vacancy.status }}
+                                </span>
+                            {% elif vacancy.status == "Closed" %}
+                                <span class="badge bg-danger">
+                                    {{ vacancy.status }}
+                                </span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">
+                                    {{ vacancy.status }}
+                                </span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <a href="{% url 'vacancy_edit' vacancy.pk %}"
+                               class="btn btn-sm btn-warning">
+                                Edit
+                            </a>
+
+                            <a href="{% url 'vacancy_delete' vacancy.pk %}"
+                               class="btn btn-sm btn-danger">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            No vacancies have been added yet.
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

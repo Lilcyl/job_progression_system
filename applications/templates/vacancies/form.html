@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8 col-lg-7">
+
+            <div class="card shadow-lg border-0">
+
+                <div class="card-header bg-primary text-white text-center py-3">
+                    <h4 class="mb-0">
+                        {% if object %}
+                            Edit Vacancy
+                        {% else %}
+                            Add Vacancy
+                        {% endif %}
+                    </h4>
+                    <small>Vacancy Management</small>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        {% for field in form %}
+
+                            <div class="mb-3">
+
+                                <label for="{{ field.id_for_label }}"
+                                       class="form-label fw-semibold">
+                                    {{ field.label }}
+                                </label>
+
+                                {{ field }}
+
+                                {% if field.help_text %}
+                                    <div class="form-text">
+                                        {{ field.help_text }}
+                                    </div>
+                                {% endif %}
+
+                                {% for error in field.errors %}
+                                    <div class="text-danger small">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+
+                        {% endfor %}
+
+                        <div class="d-flex gap-2 mt-4">
+
+                            <button type="submit"
+                                    class="btn btn-primary flex-grow-1">
+                                {% if object %}
+                                    Update Vacancy
+                                {% else %}
+                                    Save Vacancy
+                                {% endif %}
+                            </button>
+
+                            <a href="{% url 'vacancy_list' %}"
+                               class="btn btn-secondary flex-grow-1">
+                                Cancel
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="card-footer bg-light text-center">
+                    <small class="text-muted">
+                        Job & Employability Progression Management System
+                    </small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

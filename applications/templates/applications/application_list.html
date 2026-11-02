@@ -1,0 +1,26 @@
+{% extends "base.html %}
+{% block content %}
+<h1>Job Applications</h1>
+<form method="get">
+    <label for="q">Search learner, vacancy or employer</label>
+    <input id="q" type="search" name="q" value="{{query}}">
+    <button type="submit">Search</button>
+</form>
+
+<p><a href="{% url 'application_add' %}">Add application</a></p>
+{% f applications %}
+<table>
+    <thead>
+        <tr>Learner</tr>
+        <tr>Vacancy</tr>
+        <tr>Employer</tr>
+        <tr>Date</tr>
+        <tr>Status</tr>
+        <tr>Action</tr>
+    </thead>
+    <tbody>
+        
+    </tbody>
+</table>
+
+{% endblock %}
