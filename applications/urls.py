@@ -14,5 +14,9 @@ urlpatterns = [
 
     path("employers/add/", views.EmployerCreateView.as_view(), name="employer_add"),
     path("employers/<int:pk>/edit/", views.EmployerUpdateView.as_view(), name="employer_edit"),
-    path("employers/<int:pk>/delete/", views.EmployerDeleteView.as_view(), name="employer_delete")
+    path("employers/<int:pk>/delete/", views.EmployerDeleteView.as_view(), name="employer_delete"),
+
+    path("applications/add/", views.ApplicationCreateView.as_view(), name="application_add"),
+    path("applications/<int:pk>/edit/", views.ApplicationUpdateView.as_view(), name="application_edit"),
+    path("applications/<int:pk>/delete/", views.ApplicationDeleteView.as_view(), name="application_delete")
 ]

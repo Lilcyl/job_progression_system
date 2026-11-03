@@ -5,25 +5,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import JobApplication, Employer,Vacancy
 from django.http import HttpResponse
 from django.views.generic import CreateView, UpdateView, DeleteView
-from . forms import EmployerForm, VacancyForm
+from . forms import EmployerForm, VacancyForm, JobApplicationForm
 from django.urls import reverse_lazy
-#Create your views here.
-# @login_required
-# def application_list(request):
-#     applications = JobApplication.objects.select_related(
-#         "vacancy", "vacancy_company"
-#     ).order_by("-application_date")
-
-#     query = request.GET.get("q","").strip()
-#     if query:
-#         applications = applications.filter(
-#             learner_name_icontains=query
-#         ) | applications.filter(vacancy_company_name_icontains=query)
-#     return render(
-#         request,
-#         "applications/application_list.html",
-#         {"applications": applications, "query":query}
-#     )
 
 #protected views
 @login_required
@@ -48,8 +31,8 @@ def vacancy_list(request):
 
 @login_required
 def application_list(request):
-    return render(request, "applications/list.html", {
-        "applications": JobApplication.objects.select_related("vacancy", "vacancy_employer"),
+    return render(request, "applications/application_list.html", {
+        "applications": JobApplication.objects.select_related("vacancy"),
     })
 #protected views
 
@@ -86,19 +69,54 @@ class VacancyCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         messages.success(self.request, "Vacancy added successfully")
-        return super().form_valid
+        return super().form_valid(form)
 
 class VacancyUpdateView(LoginRequiredMixin, UpdateView):
     model = Vacancy
     form_class = VacancyForm
     template_name = "vacancies/form.html"
     success_url = reverse_lazy("vacancy_list")
+    
 
 class VacancyDeleteView(LoginRequiredMixin, DeleteView):
     model = Vacancy
-    form_class = VacancyForm
     template_name = "vacancies/confirm_delete.html"
     success_url = reverse_lazy("vacancy_list")
+#Vacancy Views End
+
+#Job Application Views
+class ApplicationCreateView(LoginRequiredMixin, CreateView):
+    model = JobApplication
+    form_class = JobApplicationForm
+    template_name = "applications/form.html"
+    success_url = reverse_lazy("application_list")
+
+    def form_valid(self, form):
+            messages.success(self.request, "Job Application added successfully")
+            return super().form_valid(form)
+
+class ApplicationUpdateView(LoginRequiredMixin, UpdateView):
+    model = JobApplication
+    form_class = JobApplicationForm
+    template_name = "applications/form.html"
+    success_url = reverse_lazy("application_list")
+    def form_valid(self, form):
+        messages.success(self.request, "Job Updated Successfully")
+        return super().form_valid(form)
+        
+
+class ApplicationDeleteView(LoginRequiredMixin, DeleteView):
+    model = JobApplication
+    template_name = "applications/confirm_delete.html"
+    success_url = reverse_lazy("application_list")
+    def form_valid(self, form):
+        messages.success(self.request, "Job application deleted successfully")
+        return super().form_valid(form)
+    
+
+
+
+
 
 # def application_list(request):
 #     return HttpResponse("Books section of library")

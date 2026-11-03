@@ -1,26 +1,132 @@
-{% extends "base.html %}
-{% block content %}
-<h1>Job Applications</h1>
-<form method="get">
-    <label for="q">Search learner, vacancy or employer</label>
-    <input id="q" type="search" name="q" value="{{query}}">
-    <button type="submit">Search</button>
-</form>
 
-<p><a href="{% url 'application_add' %}">Add application</a></p>
-{% f applications %}
-<table>
-    <thead>
-        <tr>Learner</tr>
-        <tr>Vacancy</tr>
-        <tr>Employer</tr>
-        <tr>Date</tr>
-        <tr>Status</tr>
-        <tr>Action</tr>
-    </thead>
-    <tbody>
-        
-    </tbody>
-</table>
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2>Job Applications</h2>
+
+        <a href="{% url 'application_add' %}"
+           class="btn btn-primary">
+            + Add Application
+        </a>
+
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-striped align-middle">
+
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Learner</th>
+                            <th>Email</th>
+                            <th>Vacancy</th>
+                            <th>Employer</th>
+                            <th>Application Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for application in applications %}
+
+                        <tr>
+
+                            <td>{{ application.id }}</td>
+
+                            <td>{{ application.learner_name }}</td>
+
+                            <td>
+                                {{ application.learner_email|default:"-" }}
+                            </td>
+
+                            <td>{{ application.vacancy.title }}</td>
+
+                            <td>
+                                {{ application.vacancy.employer.name }}
+                            </td>
+
+                            <td>
+                                {{ application.application_date|date:"d M Y" }}
+                            </td>
+
+                            <td>
+                                {% if application.status == "Offer" %}
+                                    <span class="badge bg-success">
+                                        {{ application.status }}
+                                    </span>
+
+                                {% elif application.status == "Rejected" %}
+                                    <span class="badge bg-danger">
+                                        {{ application.status }}
+                                    </span>
+
+                                {% elif application.status == "Interview" %}
+                                    <span class="badge bg-primary">
+                                        {{ application.status }}
+                                    </span>
+
+                                {% else %}
+                                    <span class="badge bg-secondary">
+                                        {{ application.status }}
+                                    </span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <div class="d-flex gap-2">
+
+                                    <a href="{% url 'application_edit' application.pk %}"
+                                       class="btn btn-sm btn-warning">
+                                        Edit
+                                    </a>
+
+                                    <a href="{% url 'application_delete' application.pk %}"
+                                       class="btn btn-sm btn-danger">
+                                        Delete
+                                    </a>
+
+                                </div>
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+                            <td colspan="8" class="text-center">
+                                No job applications found.
+                                Click Add Application to create one.
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <p class="text-muted">
+                Total Applications: {{ applications|length }}
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

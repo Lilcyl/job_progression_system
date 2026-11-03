@@ -23,7 +23,7 @@ class JobApplicationForm(forms.ModelForm):
             "notes",
         ]
 
-    widgets = {
-        "application_date": forms.DateInput(attrs={"type":"date"}),
-        "notes": forms.Textarea(attrs={"rows":3}),
-    }
+        widgets = {
+            "application_date": forms.DateInput(format="%Y-%m-%d", attrs={"type":"date"}),
+            "notes": forms.Textarea(attrs={"rows":3}),
+        }

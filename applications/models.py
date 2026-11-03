@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator
 # Create your models here.
 
 class Employer(models.Model):
@@ -20,12 +21,12 @@ class Vacancy(models.Model):
         related_name="vacancies",
         )
     position = models.CharField(max_length=100)
-    salary = models.DecimalField(decimal_places=2, max_digits=10)
+    salary = models.DecimalField(decimal_places=2, max_digits=10, validators=[MinValueValidator(0)])
     location = models.CharField(max_length=100, blank=True)
     # is_applied =models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.position} - {self.company.name}"
+        return f"{self.position} - {self.employer.name}"
     
 class JobApplication(models.Model):
     STATUS_CHOICES = [
@@ -39,7 +40,6 @@ class JobApplication(models.Model):
 
     learner_name = models.CharField(max_length=100)
     learner_email = models.EmailField(blank=True)
-    employer = models.CharField(max_length=100)
     vacancy = models.ForeignKey(
         Vacancy,
         on_delete=models.PROTECT,
@@ -58,4 +58,5 @@ class JobApplication(models.Model):
             raise ValidationError ({"date_applied": "The application date cannot be in the future"})
 
     def __str__(self):
+        position =  self.vacancy.position if self.vacancy else "No vacancy"
         return f"{self.learner_name} - {self.vacancy.position}"

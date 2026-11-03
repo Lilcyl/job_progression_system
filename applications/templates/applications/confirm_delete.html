@@ -1,10 +1,50 @@
+
 {% extends "base.html" %}
+
 {% block content %}
-<h2>Confirm deletion</h2>
-<p>Delete employer: {{ object.name }}?</p>
-<form method="post">
-    {% csrf_token %}
-    <button class="btn btn-danger">Confirm delete</button>
-    <a href="{% url 'employer_list' %}">Cancel</a>
-</form>
+
+<div class="container mt-4">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-danger text-white">
+            <h4>Delete Job Application</h4>
+        </div>
+
+        <div class="card-body">
+
+            <p>
+                Are you sure you want to delete this job application?
+            </p>
+
+            <p>
+                <strong>Learner:</strong>
+                {{ object.learner_name }}
+            </p>
+
+            <p>
+                <strong>Vacancy:</strong>
+                {{ object.vacancy.title }}
+            </p>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <button type="submit" class="btn btn-danger">
+                    Yes, Delete
+                </button>
+
+                <a href="{% url 'application_list' %}"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
 {% endblock %}
