@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h2 class="mb-4">Job & Employability Progression Dashboard</h2>
+
+    <div class="row">
+
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-primary shadow">
+                <div class="card-body">
+                    <h5>Total Employers</h5>
+                    <h2>{{ total_employers }}</h2>
+                    <a href="{% url 'employer_list' %}" class="text-white">
+                        View Employers
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-success shadow">
+                <div class="card-body">
+                    <h5>Total Vacancies</h5>
+                    <h2>{{ total_vacancies }}</h2>
+                    <a href="{% url 'vacancy_list' %}" class="text-white">
+                        View Vacancies
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-info shadow">
+                <div class="card-body">
+                    <h5>Total Applications</h5>
+                    <h2>{{ total_applications }}</h2>
+                    <a href="{% url 'application_list' %}" class="text-white">
+                        View Applications
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card mt-4 shadow-sm">
+        <div class="card-header">
+            <h5 class="mb-0">Quick Actions</h5>
+        </div>
+
+        <div class="card-body">
+            <a href="{% url 'employer_add' %}" class="btn btn-primary me-2">
+                Add Employer
+            </a>
+
+            <a href="{% url 'vacancy_add' %}" class="btn btn-success me-2">
+                Add Vacancy
+            </a>
+
+            <a href="{% url 'application_add' %}" class="btn btn-info">
+                Add Application
+            </a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

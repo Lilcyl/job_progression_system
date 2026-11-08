@@ -44,8 +44,8 @@ class JobApplication(models.Model):
         Vacancy,
         on_delete=models.PROTECT,
         related_name="applications",
-        null=True,
-        blank=True
+        null=False,
+        blank=False
         )
     application_date = models.DateField(default=timezone.localdate)
     status = models.CharField(max_length=20,
@@ -55,8 +55,8 @@ class JobApplication(models.Model):
     notes = models.TextField(blank=True)
     def clean(self):
         if self.application_date and self.application_date > timezone.localdate():
-            raise ValidationError ({"date_applied": "The application date cannot be in the future"})
+            raise ValidationError ({"application_date": "The application date cannot be in the future"})
 
     def __str__(self):
         position =  self.vacancy.position if self.vacancy else "No vacancy"
-        return f"{self.learner_name} - {self.vacancy.position}"
+        return f"{self.learner_name} - {position}"
