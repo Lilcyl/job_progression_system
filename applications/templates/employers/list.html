@@ -34,7 +34,8 @@
                     <tr>
                         <td>{{ employer.id }}</td>
                         <td>{{ employer.name }}</td>
-                        <td>{{ employer.contact_name|default:"-" }}</td>
+                      
+                        <td>{{ employer.contact_person|default:"-" }}</td>
                         <td>
                             {% if employer.email %}
                                 <a href="mailto:{{ employer.email }}">

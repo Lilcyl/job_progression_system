@@ -17,8 +17,11 @@
             <table class="table table-bordered table-striped align-middle">
                 <thead class="table-dark">
                     <tr>
-                        <th>Title</th>
+                        <th>ID</th>
                         <th>Employer</th>
+                        <th>Position</th>
+                        <th>Location</th>
+                        <th>Salary</th>
                         <th>Closing Date</th>
                         <th>Status</th>
                         <th>Actions</th>
@@ -28,10 +31,12 @@
                 <tbody>
                     {% for vacancy in vacancies %}
                     <tr>
-                        <td>{{ vacancy.title }}</td>
+                        <td>{{ vacancy.id }}</td>
 
                         <td>{{ vacancy.employer.name }}</td>
-
+                        <td>{{ vacancy.position }}</td>
+                        <td>{{ vacancy.location }}</td>
+                        <td>{{ vacancy.salary }}</td>
                         <td>
                             {% if vacancy.closing_date %}
                                 {{ vacancy.closing_date|date:"d M Y" }}

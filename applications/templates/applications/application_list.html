@@ -32,11 +32,12 @@
                             <th>Vacancy</th>
                             <th>Employer</th>
                             <th>Application Date</th>
+                            <th>Notes</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-
+ 
                     <tbody>
 
                         {% for application in applications %}
@@ -51,7 +52,7 @@
                                 {{ application.learner_email|default:"-" }}
                             </td>
 
-                            <td>{{ application.vacancy.title }}</td>
+                            <td>{{ application.vacancy }}</td>
 
                             <td>
                                 {{ application.vacancy.employer.name }}
@@ -59,6 +60,9 @@
 
                             <td>
                                 {{ application.application_date|date:"d M Y" }}
+                            </td>
+                            <td>
+                                {{ application.notes|default:"-" }}
                             </td>
 
                             <td>

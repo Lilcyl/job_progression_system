@@ -4,12 +4,12 @@ from .models import JobApplication, Vacancy, Employer
 class EmployerForm(forms.ModelForm):
     class Meta:
         model = Employer
-        fields = ["name", "email", "phone", "website", "notes"]
+        fields = ["name", "contact_person", "email", "phone", "website", "notes"]
 
 class VacancyForm(forms.ModelForm):
     class Meta:
         model = Vacancy
-        fields = ["employer", "position", "salary", "location"]
+        fields = ["employer", "position", "salary", "location", "status"]
 
 class JobApplicationForm(forms.ModelForm):
     class Meta:
