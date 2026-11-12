@@ -9,13 +9,41 @@
 
         <h2>Job Applications</h2>
 
-        <a href="{% url 'application_add' %}"
-           class="btn btn-primary">
+        <a href="{% url 'application_add' %}" class="btn btn-primary">
             + Add Application
         </a>
-
     </div>
 
+    <div class="card Shadow-sm mb-4">
+        <div class="card-body">
+            <form method="get" action="{% url 'application_list' %}" class="row g-3">
+                <div class="col-md-7">
+                    <label for="search-query" class="form-label">Search Applications</label>
+                    <input id="search-query" type="search"
+                            name="q" value="{{ search_query }}"
+                            class="form-control"
+                            placeholder="Learner, Vacancy or Employer">
+                </div>
+                <div class="col-md-3">
+                <label for="status-filter" class="form-label">Application status</label>
+                <select id="status-filter" name="status" class="form-select">
+                    <option value="">All Statuses</option>
+                    {% for value, label in status_choices %}
+                        <option value="{{ value }}" {% if selected_status == value %} selected{% endif %}>
+                            {{ label }}
+                        </option>
+                        {% endfor %}
+                </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end gap-2">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                    <a href="{% url 'application_list' %}" class="btn btn-outline-secondary">Reset</a>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
     <div class="card shadow-sm">
 
         <div class="card-body">
@@ -49,57 +77,41 @@
                             <td>{{ application.learner_name }}</td>
 
                             <td>
-                                {{ application.learner_email|default:"-" }}
-                            </td>
+                                {{ application.learner_email|default:"-" }}</td>
 
                             <td>{{ application.vacancy }}</td>
 
                             <td>
-                                {{ application.vacancy.employer.name }}
-                            </td>
+                                {{ application.vacancy.employer.name }}</td>
 
                             <td>
-                                {{ application.application_date|date:"d M Y" }}
-                            </td>
+                                {{ application.application_date|date:"d M Y" }}</td>
                             <td>
-                                {{ application.notes|default:"-" }}
-                            </td>
+                                {{ application.notes|default:"-" }}</td>
 
                             <td>
                                 {% if application.status == "Offer" %}
-                                    <span class="badge bg-success">
-                                        {{ application.status }}
-                                    </span>
+                                    <span class="badge bg-success">{{ application.status }}</span>
 
                                 {% elif application.status == "Rejected" %}
-                                    <span class="badge bg-danger">
-                                        {{ application.status }}
-                                    </span>
+                                    <span class="badge bg-danger">{{ application.status }}</span>
 
                                 {% elif application.status == "Interview" %}
-                                    <span class="badge bg-primary">
-                                        {{ application.status }}
-                                    </span>
+                                    <span class="badge bg-primary">{{ application.status }}</span>
 
                                 {% else %}
-                                    <span class="badge bg-secondary">
-                                        {{ application.status }}
-                                    </span>
+                                    <span class="badge bg-secondary">{{ application.status }}</span>
                                 {% endif %}
                             </td>
 
                             <td>
                                 <div class="d-flex gap-2">
 
-                                    <a href="{% url 'application_edit' application.pk %}"
-                                       class="btn btn-sm btn-warning">
-                                        Edit
-                                    </a>
+                                    <a href="{% url 'application_edit' application.pk %}" class="btn btn-sm btn-warning">
+                                        Edit</a>
 
-                                    <a href="{% url 'application_delete' application.pk %}"
-                                       class="btn btn-sm btn-danger">
-                                        Delete
-                                    </a>
+                                    <a href="{% url 'application_delete' application.pk %}" class="btn btn-sm btn-danger">
+                                        Delete</a>
 
                                 </div>
                             </td>

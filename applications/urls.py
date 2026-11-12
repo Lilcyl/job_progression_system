@@ -18,5 +18,5 @@ urlpatterns = [
 
     path("applications/add/", views.ApplicationCreateView.as_view(), name="application_add"),
     path("applications/<int:pk>/edit/", views.ApplicationUpdateView.as_view(), name="application_edit"),
-    path("applications/<int:pk>/delete/", views.ApplicationDeleteView.as_view(), name="application_delete")
+    path("applications/<int:pk>/delete/", views.ApplicationDeleteView.as_view(), name="application_delete"),
 ]
