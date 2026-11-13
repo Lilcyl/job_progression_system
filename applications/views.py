@@ -46,7 +46,7 @@ def application_list(request):
         applications = applications.filter(status=selected_status)
     return render(request, "applications/application_list.html", {
         "applications": JobApplication.objects.select_related("vacancy"),
-        "applications": applications,
+        "applications": "applications",
         "selected_status": "selected_status",
         "status_choices": JobApplication.STATUS_CHOICES
 
