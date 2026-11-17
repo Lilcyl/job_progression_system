@@ -63,6 +63,10 @@ class JobApplication(models.Model):
         if self.application_date and self.application_date > timezone.localdate():
             raise ValidationError ({"application_date": "The application date cannot be in the future"})
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
     def __str__(self):
         position =  self.vacancy.position if self.vacancy else "No vacancy"
         return f"{self.learner_name} - {position}"

@@ -1,9 +1,9 @@
-from fastapi import FASTAPI, Depends
+from fastapi import FastAPI, Depends
 
 from .routers import applicationsRouter, employersRouter, vacanciesRouter, stats
 from .security import require_api_key
 
-app = FASTAPI(
+app = FastAPI(
     title="Job & Employability Progression API",
     description=(
         "REST API for the Job & Employability Progression Management System. "

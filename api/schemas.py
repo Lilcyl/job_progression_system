@@ -1,10 +1,10 @@
-from datetime import date, datetime
+from datetime import date
 from typing import Literal, Annotated
-from django.db import models
+from django.utils import timezone
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 VacancyStatus = Literal["Open", "Closed"]
-STATUS_CHOICES = Literal["Applied", "Interview", "Rejected", "Offer", "Draft", "Withdrawn"]
+ApplicationStatus = Literal["Applied", "Interview", "Rejected", "Offer", "Draft", "Withdrawn"]
 EmailText = Annotated[str, Field(max_length=254, pattern=r"^$|^[^@\s]+@[^@\s]+\.[^@\s]+$")]
 
 
@@ -68,20 +68,20 @@ class ApplicationCreate(BaseModel):
     learner_name: str = Field(min_length=2, max_length=100)
     learner_email: EmailText = ""
     vacancy_id: int
-    application_date: date = Field(default_factory=date.today)
-    status: STATUS_CHOICES = "Draft"
+    application_date: date = Field(default_factory=timezone.localdate)
+    status: ApplicationStatus = "Draft"
     notes: str = ""
  
     @field_validator("application_date")
     @classmethod
     def date_cannot_be_in_the_future(cls, value: date) -> date:
-        if value > date.today():
+        if value > timezone.localdate():
             raise ValueError("The application date cannot be in the future")
         return value
 
 
-# class ApplicationStatusUpdate(BaseModel):
-#     status: ApplicationStatus
+class ApplicationStatusUpdate(BaseModel):
+    status: ApplicationStatus
 
 class ApplicationRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)

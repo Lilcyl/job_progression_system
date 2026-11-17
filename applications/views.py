@@ -13,9 +13,9 @@ from django.urls import reverse_lazy
 @login_required
 def dashboard(request):
     return render(request,"dashboard.html",{
-        "employer_count": Employer.objects.count(),
-        "vacancy_count": Vacancy.objects.count(),
-        "application_count": JobApplication.objects.count()
+        "total_employers": Employer.objects.count(),
+        "total_vacancies": Vacancy.objects.count(),
+        "total_applications": JobApplication.objects.count(),
     })
 
 @login_required
@@ -46,7 +46,7 @@ def application_list(request):
         applications = applications.filter(status=selected_status)
     return render(request, "applications/application_list.html", {
         "applications": JobApplication.objects.select_related("vacancy"),
-        "applications": "applications",
+        "search_query": "search_query",
         "selected_status": "selected_status",
         "status_choices": JobApplication.STATUS_CHOICES
 

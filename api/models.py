@@ -50,7 +50,7 @@ class JobApplication(Base):
  
     vacancy: Mapped["Vacancy"] = relationship(back_populates="applications")
     @property
-    def vacancy_postion(self) -> str:
+    def vacancy_position(self) -> str:
         return self.vacancy.position
 
     @property

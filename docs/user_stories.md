@@ -42,5 +42,5 @@ Acceptance criteria
 - No-match shows a clear message
 
 
-US7 As a learner, I want to be able to apply for a vacancy so that my application process can be tracked by the employer
-- Vacancy available to learner to apply for a job
+US7 As a learner, I want to be able to see a vacancy so that my application process can be tracked by the employer
+- Vacancy available to learner for a job
