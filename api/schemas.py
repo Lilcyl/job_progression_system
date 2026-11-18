@@ -13,7 +13,7 @@ EmailText = Annotated[str, Field(max_length=254, pattern=r"^$|^[^@\s]+@[^@\s]+\.
 class EmployerCreate(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
 
-    name: str = Field(max_length=100)
+    name: str = Field(min_length=1,max_length=100)
     contact_person: str = Field(max_length=100, default="")
     email: EmailText = ""
     phone: str = Field("", max_length=100)

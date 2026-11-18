@@ -7,7 +7,18 @@ from sqlalchemy.pool import StaticPool
 from api.database import get_db
 from api.main import app
 from api.models import Base
- 
+
+import os
+
+os.environ.setdefault(
+    "DJANGO_SETTINGS_MODULE",
+    "config.settings"
+)
+
+import django
+
+django.setup()
+
 TEST_KEY = "test-key"
  
  

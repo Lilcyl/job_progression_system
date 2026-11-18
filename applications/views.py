@@ -32,25 +32,36 @@ def vacancy_list(request):
 
 @login_required
 def application_list(request):
-    applications = JobApplication.objects.select_related("vacancy", "vacancy__employer")
     #Search learner, vacanct position or employer name
     search_query = request.GET.get("q", "").strip()
+    selected_status = request.GET.get("status", "").strip()
+
+    applications = JobApplication.objects.select_related(
+        "vacancy",
+        "vacancy__employer"
+    ).all()
+
     if search_query:
         applications = applications.filter(
             Q(learner_name__icontains=search_query) |
             Q(vacancy__position__icontains=search_query) |
             Q(vacancy__employer__name__icontains=search_query)
         )
-    selected_status = request.GET.get("status", "").strip()
+    
     if selected_status:
         applications = applications.filter(status=selected_status)
-    return render(request, "applications/application_list.html", {
-        "applications": JobApplication.objects.select_related("vacancy"),
-        "search_query": "search_query",
-        "selected_status": "selected_status",
-        "status_choices": JobApplication.STATUS_CHOICES
+    context = {
+        "applications": applications,
+        "search_query": search_query,
+        "selected_status": selected_status,
+        "status_choices": JobApplication.STATUS_CHOICES,
+    }
 
-    })
+    return render(
+        request,
+        "applications/application_list.html",
+        context
+    )
 #protected views
 
 
